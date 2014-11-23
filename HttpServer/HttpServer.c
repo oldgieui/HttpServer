@@ -11,7 +11,7 @@
 #include <fcntl.h>
 
 
-#define PORT 80
+#define PORT 8080
 #define MAXLINE 1024
 #define HEADERSIZE 1024
 
@@ -167,7 +167,7 @@ int main(int argc, char **argv)
 	int optval = 1;
 	struct sockaddr_in addr, clientaddr;
 
-	printf("Run HttpServer...");
+	printf("\nRun HttpServer...\n");
 
 	if(argc != 2)
 	{
