@@ -35,6 +35,8 @@ int parse_request(char* str, struct httpRequest* request)
 	char *ch;
 	char token[] = "\r\n";
 	int i;
+
+	printf("parsing request...\n");
 	ch = strtok(str, token);
 	for(i = 0; i < 3; i++)
 	{
@@ -56,6 +58,8 @@ int response(int socket)
 	char buffer[MAXLINE];
 	char page[MAXLINE];
 	struct httpRequest request;
+
+	printf("response...\n");
 
 	memset(&request, 0x00, sizeof(request));
 	memset(buffer, 0x00, MAXLINE);
@@ -112,10 +116,12 @@ int send_response(int socket, char* file, char* http_ver, char *message)
 	char* daytable = "Sun\0Mon\0Tue\0Wed\0Thu\0Fri\0Sat\0";
 	char* monthtable = "Jan\0Feb\0Mar\0Apr\0May\0Jun\0Jul\0Aug\0Sep\0Oct\0Nov\0Dec\0";
 
+	printf("send response...\n");
+
 	memset(header, 0x00, HEADERSIZE);
 
 	time(&now);
-	tm_ptr = localtime(now);
+	tm_ptr = localtime(&now);
 
 	sprintf(date_str, "%s, %d %s %d %02d:%02d:%02d GMT",
 			daytable+(tm_ptr->tm_wday*4),
