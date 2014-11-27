@@ -24,7 +24,7 @@ struct httpRequest
 	char http_ver[80];
 };
 
-char root[MAXLINE]; //root directory
+char root[MAXLINE];
 
 int parse_request(char* str, struct httpRequest* request);
 int response(int socket);
@@ -33,23 +33,22 @@ int send_response(int socket, char* file, char* http_ver, char *message);
 int parse_request(char* str, struct httpRequest* request)
 {
 	char *ch;
-	char token[] = "\r\n";
+	char line[] = "\n";
+	char space[] = " ";
 	int i;
 
 	printf("parsing request...\n");
-	ch = strtok(str, token);
-	for(i = 0; i < 3; i++)
-	{
-		if(ch == NULL)
-			break;
-		if(i == 0)
-			strcpy(request->method, ch);
-		else if(i == 1)
-			strcpy(request->page, ch);
-		else if(i == 2)
-			strcpy(request->http_ver, ch);
-		ch = strtok(NULL, token);
-	}
+//	printf("ch : %s\n", ch);
+	ch = strtok(str, space);
+	printf("ch : %s\n", ch);
+	strcpy(request->method, ch);
+	ch = strtok(NULL, space);
+	printf("ch : %s\n", ch);
+	strcpy(request->page, ch);
+	ch = strtok(NULL, line);
+	printf("ch : %s\n", ch);
+	strcpy(request->http_ver, ch);
+
 	return 1;
 }
 
@@ -70,9 +69,11 @@ int response(int socket)
 	}
 
 	parse_request(buffer, &request);
+	printf("request method : %s\n", request.method);
 	if(strcmp(request.method, "GET") == 0)
 	{
 		sprintf(page, "%s%s", root, request.page);
+		printf("GET PATH : %s\n", page);
 		if(access(page, R_OK) != 0)
 		{
 			send_response(socket, NULL, request.http_ver, "404 Not Found");
