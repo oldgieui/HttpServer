@@ -173,8 +173,8 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	closedir(rootdir);
-	printf(
-			"\"%s\" 디렉토리에서 HTTP 서버를 실행합니다.\nhttp://localhost:8080 경로로 접속해 보세요.\n", root);
+	printf("\"%s\" 디렉토리에서 HTTP 서버를 실행합니다.\n"
+			"http://localhost:8080 경로로 접속해 보세요.\n", root);
 
 	listenfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (listenfd == -1)
